@@ -6,35 +6,43 @@
 /*   By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 13:12:51 by jingchen          #+#    #+#             */
-/*   Updated: 2024/10/05 13:12:55 by jingchen         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:00:52 by jingchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "parsing.h"
 
-static void	check_extension(char **argv)
+static void check_extension(char **argv)
 {
-	char	*file_ext;
+	char    *extension;
 
-	file_ext = ft_strrchr(argv[1], '.');
-	if (!file_ext || ft_strncmp(file_ext + 1, "cub", ft_strlen(argv[1])) != 0)
-		raise_error("Map with invalid extension.");
+	extension = ft_strrchr(argv[1], '.');
+	if (!extension || ft_strncmp(extension, ".cub", ft_strlen(extension)))
+		print_errors("Invalid Map Extension!");
 }
 
-static void	check_map_empty_line(char *line)
+static void validate_map_lines(char *line) 
 {
-	static unsigned int	count = 0;
-	static int			flag_enter = 0;
-	static int			flag_exit = 0;
+    static unsigned int count = 0;
+    static int          flag_enter = 0;
+    static int          flag_exit = 0;
 
-	if (count == 6 && ft_strlen(line) > 1 && !flag_enter)
-		flag_enter = 1;
-	if (count < 6 && ft_strlen(line) > 1)
-		count++;
-	if (flag_enter && ft_strlen(line) == 1 && !flag_exit)
-		flag_exit++;
-	if ((ft_strlen(line) > 1 || *line != '\n') && flag_exit)
-		raise_error("Empty line in map");
+    if (count < 6 && ft_strlen(line) > 1) 
+    {
+        count++;
+    }
+    if (count == 6 && ft_strlen(line) > 1 && !flag_enter) 
+    {
+        flag_enter = 1;
+    }
+    if (flag_enter && ft_strlen(line) == 1 && !flag_exit) 
+    {
+        flag_exit++;
+    }
+    if (flag_exit && (ft_strlen(line) > 1 || *line != '\n')) 
+    {
+        raise_error("empty line in map");
+    }
 }
 
 static char	*get_lines(int fd)
@@ -42,10 +50,10 @@ static char	*get_lines(int fd)
 	char	*file;
 	char	*line;
 
-	line = get_next_line(fd);
-	file = ft_calloc(1, 1);
+	line = get_next_line (fd);
+	file = ft_calloc (1, 1);
 	if (!file)
-		exit(1);
+		exit (1);
 	while (line != NULL)
 	{
 		check_map_empty_line(line);
@@ -53,25 +61,25 @@ static char	*get_lines(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);
+	free (line);
 	return (file);
 }
 
-char	**read_file(char **argv)
+char	**read_map(char **argv)
 {
 	char	*file;
 	int		fd;
-	char	**file_con;
+	char	**map;
 
-	check_extension(argv);
-	fd = open(argv[1], O_RDONLY);
+	check_extension (argv);
+	fd = open (argv[1], O_RDONLY);
 	if (fd == -1)
-		raise_error("Error when opening file. Does the file exist?");
+		print_errors ("Error when opening file. Does the file exist?");
 	if (read(fd, 0, 1) == 0)
-		raise_error("Empty map file");
-	file = get_lines(fd);
-	close(fd);
-	file_con = ft_split(file, '\n');
-	free(file);
-	return (file_con);
+		print_errors ("Empty map file");
+	file = get_lines (fd);
+	close (fd);
+	map = ft_split (file, '\n');
+	free (file);
+	return (map);
 }
