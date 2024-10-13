@@ -6,102 +6,69 @@
 /*   By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:47 by jingchen          #+#    #+#             */
-/*   Updated: 2024/10/13 12:16:19 by jingchen         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:27:53 by jingchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*join_buffer(char *buffer, char *new_str)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
-	char	*aux;
+	char	*str;
+	int		a;
+	int		b;
+	int		i;
 
-	if (!new_str)
-		aux = NULL;
-	else
-		aux = gnl_strjoin(buffer, new_str);
-	free(buffer);
-	return (aux);
-}
-
-static char	*read_line(int fd, char *buffer)
-{
-	char	*aux;
-	int		len;
-	char	*point;
-
-	if (!buffer)
-		buffer = ft_calloc(1, 1);
-	aux = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	len = 1;
-	while (len != 0)
+	if (!s2)
+		return ((char *)s1);
+	a = ft_strlen(s1);
+	b = ft_strlen(s2);
+	i = 0;
+	str = malloc((a + b + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (a--)
 	{
-		point = aux;
-		while (*point)
-			*point++ = '\0';
-		len = read(fd, aux, BUFFER_SIZE);
-		buffer = join_buffer(buffer, aux);
-		if (gnl_strchr(aux, '\n') != NULL)
-			break ;
+		str[i] = s1[i];
+		i++;
 	}
-	free(aux);
-	return (buffer);
+	a = i;
+	i = 0;
+	while (b--)
+		str[a++] = s2[i++];
+	str[a] = '\0';
+	return (str);
 }
 
-static char	*copy_to_str(char *buffer)
+char	*gnl_strchr(const char *s, int c)
 {
 	char	*str;
 	int		i;
 
 	i = 0;
-	if (!buffer[i])
-		return (NULL);
-	while (buffer[i] != '\n' && buffer[i])
+	str = (char *)s;
+	while (str[i] != (unsigned char)c)
+	{
+		if (str[i] == '\0')
+			return (0);
 		i++;
-	str = ft_calloc(i + 2, sizeof(char));
-	i++;
-	while (i-- != 0)
-		str[i] = buffer[i];
-	return (str);
+	}
+	return (&str[i]);
 }
 
-static char	*set_buffer(char *buffer)
+void	*gnl_memchr(const void *s, int c, size_t n)
 {
-	char	*aux;
-	char	*str;
-	int		i;
+	unsigned int	i;
+	unsigned char	*mys;
 
-	aux = gnl_memchr(buffer, '\n', ft_strlen(buffer));
-	if (!aux)
+	i = 0;
+	mys = (unsigned char *)s;
+	while (n > 0)
 	{
-		free(buffer);
-		return (NULL);
+		if (mys[i] == (unsigned char)c)
+			return (&mys[i]);
+		i++;
+		n--;
 	}
-	aux++;
-	str = ft_calloc(ft_strlen(aux) + 1, sizeof(char));
-	i = -1;
-	while (i++ < (int) ft_strlen(str))
-		str[i] = aux[i];
-	free(buffer);
-	return (str);
-}
-
-char	*get_next_line(int fd)
-{
-	static char	*buffer[1024];
-	char		*str;
-
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		if (buffer[fd])
-		{
-			free(buffer[fd]);
-			buffer[fd] = NULL;
-		}
-		return (NULL);
-	}
-	buffer[fd] = read_line(fd, buffer[fd]);
-	str = copy_to_str(buffer[fd]);
-	buffer[fd] = set_buffer(buffer[fd]);
-	return (str);
+	return (0);
 }

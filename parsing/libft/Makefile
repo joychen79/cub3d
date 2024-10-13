@@ -6,7 +6,7 @@
 #    By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/13 12:28:27 by jingchen          #+#    #+#              #
-#    Updated: 2024/10/13 12:37:35 by jingchen         ###   ########.fr        #
+#    Updated: 2024/10/13 12:44:30 by jingchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,11 @@ SRC = ft_atoi.c \
 		ft_substr.c \
 		get_next_line.c \
 		get_next_line_utils.c \
+		ft_strcmp.c
 
-OBJS = (SRC:.c=.o)
+OBJS = $(SRC:.c=.o)
 
-CC = g++
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror 
 
 all: $(NAME)
