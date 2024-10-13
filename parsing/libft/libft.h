@@ -6,7 +6,7 @@
 /*   By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:21:00 by jingchen          #+#    #+#             */
-/*   Updated: 2024/10/13 12:45:17 by jingchen         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:35:03 by jingchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdio.h>
 # include <fcntl.h>
 
 //	Bonus t_list type

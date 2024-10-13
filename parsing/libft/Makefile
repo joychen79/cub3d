@@ -6,7 +6,7 @@
 #    By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/13 12:28:27 by jingchen          #+#    #+#              #
-#    Updated: 2024/10/13 12:44:30 by jingchen         ###   ########.fr        #
+#    Updated: 2024/10/13 13:41:34 by jingchen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ SRC = ft_atoi.c \
 		ft_strlen.c \
 		ft_strnstr.c \
 		ft_substr.c \
+		ft_strcmp.c \
 		get_next_line.c \
 		get_next_line_utils.c \
-		ft_strcmp.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -38,7 +38,7 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+		ar rcs $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
