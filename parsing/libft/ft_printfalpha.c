@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_printfalpha.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 13:20:47 by jingchen          #+#    #+#             */
-/*   Updated: 2024/10/13 11:27:03 by jingchen         ###   ########.fr       */
+/*   Created: 2024/10/13 12:00:12 by jingchen          #+#    #+#             */
+/*   Updated: 2024/10/13 12:11:48 by jingchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include "../libft/libft.h"
-
-void    print_errors(char *errors);
-char	**read_map(char **argv);
-
-enum e_values
+int	ft_putstr(char *c)
 {
-    NO,
-    SO,
-    WE,
-    EA,
-    F,
-    C,
-    ERROR
-};
+	int		len;
 
-typedef struct s_color
+	if (!c)
+		return (ft_putstr("(null)"));
+	len = 0;
+	while (c[len])
+		len += ft_putchar(c[len]);
+	return (len);
+}
+
+int	ft_putstr(char *c)
 {
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-}	t_color;
+	int		len;
 
-#endif
+	if (!c)
+		return (ft_putstr("(null)"));
+	len = 0;
+	while (c[len])
+		len += ft_putchar(c[len]);
+	return (len);
+}
+

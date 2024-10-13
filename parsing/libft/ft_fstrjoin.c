@@ -1,44 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_fstrjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jingchen <jingchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 13:20:47 by jingchen          #+#    #+#             */
-/*   Updated: 2024/10/13 11:27:03 by jingchen         ###   ########.fr       */
+/*   Created: 2024/10/13 12:17:19 by jingchen          #+#    #+#             */
+/*   Updated: 2024/10/13 12:17:27 by jingchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include "../libft/libft.h"
-
-void    print_errors(char *errors);
-char	**read_map(char **argv);
-
-enum e_values
+char	*ft_fstrjoin(char *s1, char *s2)
 {
-    NO,
-    SO,
-    WE,
-    EA,
-    F,
-    C,
-    ERROR
-};
+	char	*str;
+	int		a;
+	int		b;
+	int		i;
 
-typedef struct s_color
-{
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-}	t_color;
-
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	a = ft_strlen(s1);
+	b = ft_strlen(s2);
+	i = 0;
+	str = malloc(a + b + 1);
+	if (!str)
+		return (NULL);
+	while (a--)
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	a = i;
+	i = 0;
+	while (b--)
+		str[a++] = s2[i++];
+	str[a] = '\0';
+	(free(s1), s1 = NULL);
+	return (str);
+}
